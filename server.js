@@ -6,7 +6,7 @@ import { addStudent, listStudents, findStudent, updateStudentStatus } from './sr
 import { markAttendance, listAttendance } from './src/attendance.js';
 import { addActivity, listActivities } from './src/activities.js';
 import { generateStudentsReport, generateAttendanceReport, generateActivitiesReport, generateStudentSummaryReport } from './src/reports.js';
-import { login, requireAuthMiddleware } from './src/auth.js';
+import { login, loginStudent, registerStudent, requireAuthMiddleware, adminOnly, studentOnly } from './src/auth.js';
 import { logInfo, logError } from './src/logger.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -32,11 +32,28 @@ app.post('/api/login', (req, res) => {
   }
 });
 
+// Student auth (public)
+app.post('/api/students/register', async (req, res) => {
+  try {
+    const { name, email, year, password } = req.body || {};
+    const s = await registerStudent({ name, email, year, password });
+    res.status(201).json({ id: s.id, email: s.email, name: s.name, year: s.year });
+  } catch (err) { sendError(res, err, 400); }
+});
+
+app.post('/api/students/login', async (req, res) => {
+  try {
+    const { email, password } = req.body || {};
+    const session = await loginStudent(email, password);
+    res.json(session);
+  } catch (err) { sendError(res, err, 401); }
+});
+
 // Protected routes middleware
 app.use('/api', requireAuthMiddleware);
 
 // Students
-app.get('/api/students', async (req, res) => {
+app.get('/api/students', adminOnly, async (req, res) => {
   try {
     const { status } = req.query;
     const rows = await listStudents({ status });
@@ -44,7 +61,7 @@ app.get('/api/students', async (req, res) => {
   } catch (err) { sendError(res, err); }
 });
 
-app.post('/api/students', async (req, res) => {
+app.post('/api/students', adminOnly, async (req, res) => {
   try {
     const { name, email, year, cohort, status } = req.body;
     const student = await addStudent({ name, email, year, cohort, status });
@@ -52,7 +69,7 @@ app.post('/api/students', async (req, res) => {
   } catch (err) { sendError(res, err, 400); }
 });
 
-app.get('/api/students/:id', async (req, res) => {
+app.get('/api/students/:id', adminOnly, async (req, res) => {
   try {
     const student = await findStudent({ id: req.params.id });
     if (!student) return res.status(404).json({ error: 'Not found' });
@@ -60,7 +77,7 @@ app.get('/api/students/:id', async (req, res) => {
   } catch (err) { sendError(res, err); }
 });
 
-app.patch('/api/students/:id/status', async (req, res) => {
+app.patch('/api/students/:id/status', adminOnly, async (req, res) => {
   try {
     const { status } = req.body;
     const updated = await updateStudentStatus(req.params.id, status);
@@ -69,14 +86,14 @@ app.patch('/api/students/:id/status', async (req, res) => {
 });
 
 // Attendance
-app.get('/api/attendance', async (req, res) => {
+app.get('/api/attendance', adminOnly, async (req, res) => {
   try {
     const rows = await listAttendance({ studentId: req.query.studentId, from: req.query.from, to: req.query.to });
     res.json(rows);
   } catch (err) { sendError(res, err); }
 });
 
-app.post('/api/attendance', async (req, res) => {
+app.post('/api/attendance', adminOnly, async (req, res) => {
   try {
     const rec = await markAttendance(req.body);
     res.status(201).json(rec);
@@ -84,14 +101,14 @@ app.post('/api/attendance', async (req, res) => {
 });
 
 // Activities
-app.get('/api/activities', async (req, res) => {
+app.get('/api/activities', adminOnly, async (req, res) => {
   try {
     const rows = await listActivities({ studentId: req.query.studentId, from: req.query.from, to: req.query.to });
     res.json(rows);
   } catch (err) { sendError(res, err); }
 });
 
-app.post('/api/activities', async (req, res) => {
+app.post('/api/activities', adminOnly, async (req, res) => {
   try {
     const rec = await addActivity(req.body);
     res.status(201).json(rec);
@@ -99,7 +116,7 @@ app.post('/api/activities', async (req, res) => {
 });
 
 // Reports
-app.get('/api/reports/students', async (req, res) => {
+app.get('/api/reports/students', adminOnly, async (req, res) => {
   try {
     const { format = 'json' } = req.query;
     if (format === 'json') {
@@ -112,7 +129,7 @@ app.get('/api/reports/students', async (req, res) => {
   } catch (err) { sendError(res, err); }
 });
 
-app.get('/api/reports/attendance', async (req, res) => {
+app.get('/api/reports/attendance', adminOnly, async (req, res) => {
   try {
     const { format = 'json', from, to, studentId } = req.query;
     if (format === 'json') {
@@ -125,7 +142,7 @@ app.get('/api/reports/attendance', async (req, res) => {
   } catch (err) { sendError(res, err); }
 });
 
-app.get('/api/reports/activities', async (req, res) => {
+app.get('/api/reports/activities', adminOnly, async (req, res) => {
   try {
     const { format = 'json', from, to, studentId } = req.query;
     if (format === 'json') {
@@ -138,7 +155,7 @@ app.get('/api/reports/activities', async (req, res) => {
   } catch (err) { sendError(res, err); }
 });
 
-app.get('/api/reports/student-summary/:id', async (req, res) => {
+app.get('/api/reports/student-summary/:id', adminOnly, async (req, res) => {
   try {
     const { format = 'json' } = req.query;
     const out = await generateStudentSummaryReport({ studentId: req.params.id, format });
@@ -153,6 +170,26 @@ app.get('/api/reports/student-summary/:id', async (req, res) => {
 // Static fallback -> serve index.html for root
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// Student self-service endpoints
+app.get('/api/me', async (req, res) => {
+  if (req.session?.role === 'student') {
+    const s = await (await import('./src/students.js')).findStudent({ id: req.session.studentId });
+    return res.json({ role: 'student', student: s });
+  }
+  if (req.session?.role === 'admin') return res.json({ role: 'admin', user: req.session.username });
+  return res.json({ role: 'guest' });
+});
+
+app.get('/api/my/attendance', studentOnly, async (req, res) => {
+  const rows = await listAttendance({ studentId: req.session.studentId });
+  res.json(rows);
+});
+
+app.get('/api/my/activities', studentOnly, async (req, res) => {
+  const rows = await listActivities({ studentId: req.session.studentId });
+  res.json(rows);
 });
 
 function sendError(res, err, status = 500) {

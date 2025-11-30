@@ -29,11 +29,41 @@
 <main>
   <div id="loginView" class="card">
     <h2>Login</h2>
-    <p>Use default credentials: <code>admin / password</code></p>
-    <label>Username<input id="loginUser" /></label>
-    <label>Password<input id="loginPass" type="password" /></label>
-    <button id="loginBtn">Login</button>
+    <div class="row">
+      <label><input type="radio" name="role" value="admin" checked /> Admin</label>
+      <label><input type="radio" name="role" value="student" /> Student</label>
+    </div>
+    <p>Admin default: <code>admin / password</code></p>
+    <div id="adminLogin">
+      <label>Username<input id="loginUser" placeholder="admin" /></label>
+      <label>Password<input id="loginPass" type="password" placeholder="password" /></label>
+    </div>
+    <div id="studentLogin" class="hidden">
+      <label>Email<input id="stuLoginEmail" placeholder="student@example.com" /></label>
+      <label>Password<input id="stuLoginPass" type="password" placeholder="Your password" /></label>
+    </div>
+    <div class="row" style="margin-top:0.5rem;">
+      <button id="loginBtn">Login</button>
+      <button id="showRegisterBtn" style="background:#475569;">Register</button>
+    </div>
     <div id="loginError" class="error hidden"></div>
+  </div>
+
+  <div id="registerView" class="card hidden">
+    <h2>Student Registration</h2>
+    <div class="row">
+      <label>Name<input id="regName" /></label>
+      <label>Email<input id="regEmail" /></label>
+    </div>
+    <div class="row">
+      <label>Year<input id="regYear" placeholder="2025" /></label>
+      <label>Password<input id="regPass" type="password" /></label>
+    </div>
+    <div class="row" style="margin-top:0.5rem;">
+      <button id="registerBtn">Create Account</button>
+      <button id="cancelRegisterBtn" style="background:#64748b;">Cancel</button>
+    </div>
+    <div id="registerMsg" class="error hidden"></div>
   </div>
 
   <div id="appView" class="hidden">
@@ -43,7 +73,7 @@
       <p><span class="tag" id="studentsCount">Students: 0</span><span class="tag" id="attendanceCount">Attendance: 0</span><span class="tag" id="activitiesCount">Activities: 0</span></p>
     </div>
 
-    <div class="row">
+    <div class="row" id="adminPanels">
       <div class="card" style="flex:1 1 300px;">
         <h3>Add Student</h3>
         <label>Name<input id="stuName" /></label>
@@ -73,7 +103,7 @@
       </div>
     </div>
 
-    <div class="card">
+    <div class="card" id="studentsCard">
       <h3>Students</h3>
       <table id="studentsTable"><thead><tr><th>Name</th><th>Email</th><th>Year</th><th>Status</th><th>Enrolled</th></tr></thead><tbody></tbody></table>
     </div>

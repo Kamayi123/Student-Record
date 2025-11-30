@@ -13,7 +13,7 @@ All data is stored locally as JSON files under `data/`, with logs in `logs/` and
 Prerequisites:
 - Node.js 16+ installed (LTS recommended)
 
-Commands:
+CLI Commands:
 ```powershell
 # Show help
 node index.js --help
@@ -45,6 +45,18 @@ node index.js report activities --format json --studentId $aliceId
 node index.js report student-summary --studentId $aliceId --format json
 ```
 
+Web App (browser):
+```powershell
+# Install dependencies and start web server
+npm install
+npm start
+# Then open http://localhost:3000 in your browser
+```
+
+- Admin login: choose Admin role, credentials `admin / password`.
+- Student self-registration: choose Student role → Register → fill Name, Email, Year, Password. Then login as Student to see your records.
+- Admin can add students, mark attendance, and add activities from the dashboard. Students see read-only views of their own attendance and activities.
+
 Note: On first run, the app auto-creates `data/` files.
 
 ## Design Choices
@@ -57,12 +69,13 @@ Note: On first run, the app auto-creates `data/` files.
   - `src/reports.js` for report generation (CSV/JSON)
   - `src/storage.js` for data file access
   - `src/logger.js` for file-based logging (`logs/app.log`)
+  - `src/auth.js` for simple role-based auth (admin + student sessions)
   - `src/utils.js` for argument parsing, CSV formatting, and helpers
 - Cross-platform safe: avoids shell-specific syntax inside npm scripts; examples are provided for Windows PowerShell.
 
 ## Data Model
 - Students (`data/students.json`):
-  - `{ id, name, email, year, status, enrolledOn }` (older records may have `cohort`; the app normalizes to `year`)
+  - `{ id, name, email, year, status, enrolledOn, auth? }` (older records may have `cohort`; the app normalizes to `year`). If the student registered, `auth` includes `{ salt, hash }`.
 - Attendance (`data/attendance.json`):
   - `{ id, studentId, date(YYYY-MM-DD), status(present|absent|late), note }`
 - Activities (`data/activities.json`):
@@ -88,6 +101,7 @@ Files are written under `reports/`. You can override output path with `--out <pa
 - Use the commands above to create students, mark attendance, add activities, and generate reports.
 - Inspect `data/*.json` to verify persisted records.
 - Open files in `reports/` to validate generated outputs.
+ - For the web app, try registering a new student, then login as Student and verify "Recent Attendance" shows only their own records.
 
 ## Troubleshooting
 - If Node is not recognized, install it from https://nodejs.org

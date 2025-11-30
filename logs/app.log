@@ -10,3 +10,16 @@
 2025-11-30T19:44:09.971Z [INFO] Student created d5eac77c-94d0-4603-81a1-e1a73e5b4df1 ka@gmail.com
 2025-11-30T19:45:53.054Z [INFO] Attendance marked d5eac77c-94d0-4603-81a1-e1a73e5b4df1 2022-05-09 absent
 2025-11-30T19:46:37.576Z [INFO] Activity added d5eac77c-94d0-4603-81a1-e1a73e5b4df1 quiz
+2025-11-30T20:02:13.691Z [INFO] Server started on port 3000
+2025-11-30T20:07:15.862Z [INFO] Server started on port 3000
+2025-11-30T20:11:53.525Z [ERROR] Error: date must be YYYY-MM-DD
+    at markAttendance (file:///C:/Users/kamay/OneDrive/Desktop/Student%20Record/src/attendance.js:8:36)
+    at file:///C:/Users/kamay/OneDrive/Desktop/Student%20Record/server.js:98:23
+    at Layer.handle [as handle_request] (C:\Users\kamay\OneDrive\Desktop\Student Record\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\kamay\OneDrive\Desktop\Student Record\node_modules\express\lib\router\route.js:149:13)
+    at adminOnly (file:///C:/Users/kamay/OneDrive/Desktop/Student%20Record/src/auth.js:82:3)
+    at Layer.handle [as handle_request] (C:\Users\kamay\OneDrive\Desktop\Student Record\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\kamay\OneDrive\Desktop\Student Record\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (C:\Users\kamay\OneDrive\Desktop\Student Record\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (C:\Users\kamay\OneDrive\Desktop\Student Record\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\kamay\OneDrive\Desktop\Student Record\node_modules\express\lib\router\index.js:284:15
