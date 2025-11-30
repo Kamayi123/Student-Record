@@ -1,0 +1,12 @@
+2025-11-30T18:53:26.243Z [INFO] Student created 1363efcb-3113-405a-9ad4-c3d83f9646f8 alice@example.com
+2025-11-30T18:53:26.244Z [INFO] Student added: Alice Johnson (1363efcb-3113-405a-9ad4-c3d83f9646f8)
+2025-11-30T18:53:26.543Z [INFO] Attendance marked 1363efcb-3113-405a-9ad4-c3d83f9646f8 2025-11-30 present
+2025-11-30T18:53:26.650Z [INFO] Activity added 1363efcb-3113-405a-9ad4-c3d83f9646f8 assignment
+2025-11-30T19:10:27.461Z [INFO] Server started on port 3000
+2025-11-30T19:16:25.243Z [INFO] Student created 70880e63-47f1-415f-8972-14d3bb98d8a5 kamayiguillaume@gmail.com
+2025-11-30T19:36:48.359Z [INFO] Server started on port 3000
+2025-11-30T19:39:58.978Z [INFO] Server started on port 3000
+2025-11-30T19:43:07.798Z [INFO] Attendance marked 70880e63-47f1-415f-8972-14d3bb98d8a5 2025-10-30 late
+2025-11-30T19:44:09.971Z [INFO] Student created d5eac77c-94d0-4603-81a1-e1a73e5b4df1 ka@gmail.com
+2025-11-30T19:45:53.054Z [INFO] Attendance marked d5eac77c-94d0-4603-81a1-e1a73e5b4df1 2022-05-09 absent
+2025-11-30T19:46:37.576Z [INFO] Activity added d5eac77c-94d0-4603-81a1-e1a73e5b4df1 quiz

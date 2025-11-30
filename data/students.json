@@ -1,0 +1,26 @@
+[
+  {
+    "id": "1363efcb-3113-405a-9ad4-c3d83f9646f8",
+    "name": "Alice Johnson",
+    "email": "alice@example.com",
+    "cohort": "2025A",
+    "status": "active",
+    "enrolledOn": "2025-11-30"
+  },
+  {
+    "id": "70880e63-47f1-415f-8972-14d3bb98d8a5",
+    "name": "Kamayi Guillaume",
+    "email": "kamayiguillaume@gmail.com",
+    "cohort": "2025A",
+    "status": "active",
+    "enrolledOn": "2025-11-30"
+  },
+  {
+    "id": "d5eac77c-94d0-4603-81a1-e1a73e5b4df1",
+    "name": "Tata Sir",
+    "email": "ka@gmail.com",
+    "year": "2025",
+    "status": "active",
+    "enrolledOn": "2025-11-30"
+  }
+]

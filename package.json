@@ -1,0 +1,19 @@
+{
+  "name": "student-record-system",
+  "version": "1.0.0",
+  "description": "CLI and web app to register learners, mark attendance, track activities, and generate file reports (CSV/JSON).",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "server": "node server.js",
+    "cli": "node index.js --help"
+  },
+  "keywords": ["students", "attendance", "activities", "reports", "cli", "web"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "express": "^4.19.2"
+  }
+}

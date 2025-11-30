@@ -1,0 +1,23 @@
+[
+  {
+    "id": "1a06dad0-8587-4766-a7bd-c0f90e8e88bd",
+    "studentId": "1363efcb-3113-405a-9ad4-c3d83f9646f8",
+    "date": "2025-11-30",
+    "status": "present",
+    "note": "On time"
+  },
+  {
+    "id": "187676a9-f821-4064-b2ef-a5825a00ac4c",
+    "studentId": "70880e63-47f1-415f-8972-14d3bb98d8a5",
+    "date": "2025-10-30",
+    "status": "late",
+    "note": "Come early next time."
+  },
+  {
+    "id": "7415d392-2c3f-4119-bf6e-7bba66ac0b41",
+    "studentId": "d5eac77c-94d0-4603-81a1-e1a73e5b4df1",
+    "date": "2022-05-09",
+    "status": "absent",
+    "note": "why "
+  }
+]

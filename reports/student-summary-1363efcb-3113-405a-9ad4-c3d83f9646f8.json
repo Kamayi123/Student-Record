@@ -1,0 +1,35 @@
+{
+  "student": {
+    "id": "1363efcb-3113-405a-9ad4-c3d83f9646f8",
+    "name": "Alice Johnson",
+    "email": "alice@example.com",
+    "cohort": "2025A",
+    "status": "active",
+    "enrolledOn": "2025-11-30"
+  },
+  "counts": {
+    "attendance": 1,
+    "present": 1,
+    "absent": 0,
+    "late": 0,
+    "activities": 1
+  },
+  "attendance": [
+    {
+      "id": "1a06dad0-8587-4766-a7bd-c0f90e8e88bd",
+      "studentId": "1363efcb-3113-405a-9ad4-c3d83f9646f8",
+      "date": "2025-11-30",
+      "status": "present",
+      "note": "On time"
+    }
+  ],
+  "activities": [
+    {
+      "id": "9b82bfb5-6f25-4634-a17d-4519155d3041",
+      "studentId": "1363efcb-3113-405a-9ad4-c3d83f9646f8",
+      "timestamp": "2025-11-30T18:53:26.648Z",
+      "type": "assignment",
+      "description": "Math HW1"
+    }
+  ]
+}

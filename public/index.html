@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Student Record Web App</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<style>
+  body { font-family: Arial, sans-serif; margin: 0; background:#f5f7fa; }
+  header { background:#1e3a8a; color:#fff; padding:1rem; }
+  h1 { margin:0; font-size:1.25rem; }
+  main { padding:1rem; max-width:1000px; margin:0 auto; }
+  .card { background:#fff; border-radius:8px; padding:1rem 1.25rem; margin-bottom:1rem; box-shadow:0 2px 4px rgba(0,0,0,0.08); }
+  .row { display:flex; gap:1rem; flex-wrap:wrap; }
+  label { display:block; margin-top:0.5rem; font-size:0.85rem; font-weight:600; }
+  input, select, textarea { width:100%; padding:0.5rem; margin-top:0.25rem; border:1px solid #ccc; border-radius:4px; font-size:0.9rem; }
+  button { background:#2563eb; color:#fff; border:none; padding:0.6rem 1rem; border-radius:4px; cursor:pointer; font-size:0.9rem; }
+  button:hover { background:#1d4ed8; }
+  table { width:100%; border-collapse:collapse; margin-top:0.5rem; font-size:0.85rem; }
+  th, td { border:1px solid #e2e8f0; padding:0.4rem 0.5rem; text-align:left; }
+  th { background:#f1f5f9; }
+  .hidden { display:none; }
+  .error { color:#b91c1c; font-size:0.8rem; margin-top:0.5rem; }
+  .tag { display:inline-block; background:#1e40af; color:#fff; padding:0 6px; border-radius:4px; font-size:0.65rem; margin-right:4px; }
+  footer { text-align:center; padding:2rem 0; font-size:0.75rem; color:#64748b; }
+</style>
+</head>
+<body>
+<header><h1>Student Record Web App</h1></header>
+<main>
+  <div id="loginView" class="card">
+    <h2>Login</h2>
+    <p>Use default credentials: <code>admin / password</code></p>
+    <label>Username<input id="loginUser" /></label>
+    <label>Password<input id="loginPass" type="password" /></label>
+    <button id="loginBtn">Login</button>
+    <div id="loginError" class="error hidden"></div>
+  </div>
+
+  <div id="appView" class="hidden">
+    <div class="card">
+      <h2>Overview</h2>
+      <p><strong>Session:</strong> <span id="sessionUser"></span> <button id="logoutBtn" style="background:#dc2626">Logout</button></p>
+      <p><span class="tag" id="studentsCount">Students: 0</span><span class="tag" id="attendanceCount">Attendance: 0</span><span class="tag" id="activitiesCount">Activities: 0</span></p>
+    </div>
+
+    <div class="row">
+      <div class="card" style="flex:1 1 300px;">
+        <h3>Add Student</h3>
+        <label>Name<input id="stuName" /></label>
+        <label>Email<input id="stuEmail" /></label>
+        <label>Year<input id="stuYear" placeholder="2025" /></label>
+        <button id="addStudentBtn">Add Student</button>
+        <div id="addStudentMsg" class="error hidden"></div>
+      </div>
+
+      <div class="card" style="flex:1 1 300px;">
+        <h3>Mark Attendance</h3>
+        <label>Student<select id="attStudent"></select></label>
+        <label>Date<input id="attDate" type="date" /></label>
+        <label>Status<select id="attStatus"><option>present</option><option>absent</option><option>late</option></select></label>
+        <label>Note<textarea id="attNote" rows="2"></textarea></label>
+        <button id="markAttendanceBtn">Mark</button>
+        <div id="attMsg" class="error hidden"></div>
+      </div>
+
+      <div class="card" style="flex:1 1 300px;">
+        <h3>Add Activity</h3>
+        <label>Student<select id="actStudent"></select></label>
+        <label>Type<select id="actType"><option>assignment</option><option>quiz</option><option>participation</option><option>other</option></select></label>
+        <label>Description<textarea id="actDesc" rows="2"></textarea></label>
+        <button id="addActivityBtn">Add Activity</button>
+        <div id="actMsg" class="error hidden"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Students</h3>
+      <table id="studentsTable"><thead><tr><th>Name</th><th>Email</th><th>Year</th><th>Status</th><th>Enrolled</th></tr></thead><tbody></tbody></table>
+    </div>
+
+    <div class="card">
+      <h3>Recent Attendance</h3>
+      <table id="attendanceTable"><thead><tr><th>Date</th><th>Student</th><th>Status</th><th>Note</th></tr></thead><tbody></tbody></table>
+    </div>
+
+    <div class="card">
+      <h3>Recent Activities</h3>
+      <table id="activitiesTable"><thead><tr><th>Time</th><th>Student</th><th>Type</th><th>Description</th></tr></thead><tbody></tbody></table>
+    </div>
+
+  </div>
+</main>
+<footer>Student Record System &copy; 2025</footer>
+<script src="app.js"></script>
+</body>
+</html>
