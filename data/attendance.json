@@ -19,5 +19,19 @@
     "date": "2022-05-09",
     "status": "absent",
     "note": "why "
+  },
+  {
+    "id": "6206df69-d6c3-4053-afde-33938540e40c",
+    "studentId": "d2174ae4-0bc4-4360-b7cb-9ac366da506f",
+    "date": "2025-11-30",
+    "status": "absent",
+    "note": "always home"
+  },
+  {
+    "id": "818f65aa-9b2e-4832-a974-e407d5af3cbc",
+    "studentId": "b78e8a41-c2b1-4e4f-b48e-22efef3d78ce",
+    "date": "2026-01-03",
+    "status": "present",
+    "note": ""
   }
 ]

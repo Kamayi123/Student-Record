@@ -23,3 +23,30 @@
     at Route.dispatch (C:\Users\kamay\OneDrive\Desktop\Student Record\node_modules\express\lib\router\route.js:119:3)
     at Layer.handle [as handle_request] (C:\Users\kamay\OneDrive\Desktop\Student Record\node_modules\express\lib\router\layer.js:95:5)
     at C:\Users\kamay\OneDrive\Desktop\Student Record\node_modules\express\lib\router\index.js:284:15
+2025-12-01T12:58:43.786Z [INFO] Student created d2174ae4-0bc4-4360-b7cb-9ac366da506f loic@gmail.com
+2025-12-01T13:00:09.528Z [INFO] Attendance marked d2174ae4-0bc4-4360-b7cb-9ac366da506f 2025-11-30 absent
+2026-01-04T12:59:52.574Z [INFO] Server started on port 3000
+2026-01-04T13:34:23.659Z [ERROR] Error: Invalid credentials
+    at loginStudent (file:///C:/Users/kamay/OneDrive/Desktop/Student%20Record/src/auth.js:59:54)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///C:/Users/kamay/OneDrive/Desktop/Student%20Record/server.js:47:21
+2026-01-04T13:34:33.144Z [ERROR] Error: Invalid credentials
+    at loginStudent (file:///C:/Users/kamay/OneDrive/Desktop/Student%20Record/src/auth.js:59:54)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///C:/Users/kamay/OneDrive/Desktop/Student%20Record/server.js:47:21
+2026-01-04T13:35:25.186Z [INFO] Student created b78e8a41-c2b1-4e4f-b48e-22efef3d78ce man@gmail.com
+2026-01-04T13:55:16.147Z [ERROR] Error: Invalid credentials
+    at loginStudent (file:///C:/Users/kamay/OneDrive/Desktop/Student%20Record/src/auth.js:58:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///C:/Users/kamay/OneDrive/Desktop/Student%20Record/server.js:47:21
+2026-01-04T13:55:31.339Z [ERROR] Error: Invalid credentials
+    at loginStudent (file:///C:/Users/kamay/OneDrive/Desktop/Student%20Record/src/auth.js:58:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///C:/Users/kamay/OneDrive/Desktop/Student%20Record/server.js:47:21
+2026-01-04T13:58:17.378Z [INFO] Server started on port 3000
+2026-01-04T13:59:48.508Z [INFO] Attendance marked b78e8a41-c2b1-4e4f-b48e-22efef3d78ce 2026-01-03 present
+2026-01-04T14:10:07.345Z [INFO] Activity added 1363efcb-3113-405a-9ad4-c3d83f9646f8 quiz
+2026-01-04T14:10:07.353Z [INFO] Activity added 70880e63-47f1-415f-8972-14d3bb98d8a5 quiz
+2026-01-04T14:10:07.359Z [INFO] Activity added d5eac77c-94d0-4603-81a1-e1a73e5b4df1 quiz
+2026-01-04T14:10:07.366Z [INFO] Activity added d2174ae4-0bc4-4360-b7cb-9ac366da506f quiz
+2026-01-04T14:10:07.372Z [INFO] Activity added b78e8a41-c2b1-4e4f-b48e-22efef3d78ce quiz

@@ -5,122 +5,408 @@
 <title>Student Record Web App</title>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <style>
-  body { font-family: Arial, sans-serif; margin: 0; background:#f5f7fa; }
-  header { background:#1e3a8a; color:#fff; padding:1rem; }
-  h1 { margin:0; font-size:1.25rem; }
-  main { padding:1rem; max-width:1000px; margin:0 auto; }
-  .card { background:#fff; border-radius:8px; padding:1rem 1.25rem; margin-bottom:1rem; box-shadow:0 2px 4px rgba(0,0,0,0.08); }
+  * { box-sizing: border-box; }
+  body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
+  header { background: rgba(30, 58, 138, 0.95); color:#fff; padding:1.25rem 2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+  header h1 { margin:0; font-size:1.5rem; font-weight: 600; letter-spacing: 0.5px; }
+  main { padding:1.5rem; max-width:1200px; margin:0 auto; }
+  .card { background:#fff; border-radius:12px; padding:1.5rem; margin-bottom:1.25rem; box-shadow:0 8px 25px rgba(0,0,0,0.1); transition: transform 0.2s, box-shadow 0.2s; }
+  .card:hover { transform: translateY(-2px); box-shadow: 0 12px 35px rgba(0,0,0,0.15); }
   .row { display:flex; gap:1rem; flex-wrap:wrap; }
-  label { display:block; margin-top:0.5rem; font-size:0.85rem; font-weight:600; }
-  input, select, textarea { width:100%; padding:0.5rem; margin-top:0.25rem; border:1px solid #ccc; border-radius:4px; font-size:0.9rem; }
-  button { background:#2563eb; color:#fff; border:none; padding:0.6rem 1rem; border-radius:4px; cursor:pointer; font-size:0.9rem; }
-  button:hover { background:#1d4ed8; }
-  table { width:100%; border-collapse:collapse; margin-top:0.5rem; font-size:0.85rem; }
-  th, td { border:1px solid #e2e8f0; padding:0.4rem 0.5rem; text-align:left; }
-  th { background:#f1f5f9; }
-  .hidden { display:none; }
-  .error { color:#b91c1c; font-size:0.8rem; margin-top:0.5rem; }
-  .tag { display:inline-block; background:#1e40af; color:#fff; padding:0 6px; border-radius:4px; font-size:0.65rem; margin-right:4px; }
-  footer { text-align:center; padding:2rem 0; font-size:0.75rem; color:#64748b; }
+  label { display:block; margin-top:0.75rem; font-size:0.85rem; font-weight:600; color: #374151; }
+  input, select, textarea { width:100%; padding:0.75rem; margin-top:0.35rem; border:2px solid #e5e7eb; border-radius:8px; font-size:0.95rem; transition: border-color 0.2s, box-shadow 0.2s; }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+  button { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color:#fff; border:none; padding:0.75rem 1.5rem; border-radius:8px; cursor:pointer; font-size:0.95rem; font-weight: 600; transition: all 0.2s; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); }
+  button:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4); }
+  button:active { transform: translateY(0); }
+  table { width:100%; border-collapse:collapse; margin-top:1rem; font-size:0.9rem; }
+  th, td { border:none; padding:0.75rem 1rem; text-align:left; border-bottom: 1px solid #e5e7eb; }
+  th { background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); font-weight: 600; color: #1e3a8a; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.5px; }
+  tbody tr:hover { background: #f8fafc; }
+  .hidden { display:none !important; }
+  .error { color:#dc2626; font-size:0.85rem; margin-top:0.75rem; padding: 0.5rem; background: #fef2f2; border-radius: 6px; border-left: 3px solid #dc2626; }
+  .success { color:#059669; font-size:0.85rem; margin-top:0.75rem; padding: 0.5rem; background: #ecfdf5; border-radius: 6px; border-left: 3px solid #059669; }
+  footer { text-align:center; padding:2rem 0; font-size:0.85rem; color:rgba(255,255,255,0.8); }
+
+  /* Login Styles */
+  .login-container { max-width: 420px; margin: 3rem auto; }
+  .login-container .card { padding: 2rem; }
+  .login-container h2 { margin: 0 0 1.5rem 0; color: #1e3a8a; text-align: center; font-size: 1.75rem; }
+  .role-selector { display: flex; gap: 1rem; justify-content: center; margin-bottom: 1.5rem; }
+  .role-selector label { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.75rem 1.25rem; border-radius: 8px; background: #f1f5f9; transition: all 0.2s; margin: 0; }
+  .role-selector label:has(input:checked) { background: #2563eb; color: white; }
+  .role-selector input[type="radio"] { display: none; }
+  .login-buttons { display: flex; gap: 0.75rem; margin-top: 1.5rem; }
+  .login-buttons button { flex: 1; }
+  .btn-secondary { background: linear-gradient(135deg, #64748b 0%, #475569 100%); box-shadow: 0 4px 12px rgba(71, 85, 105, 0.3); }
+  .btn-secondary:hover { box-shadow: 0 6px 20px rgba(71, 85, 105, 0.4); }
+
+  /* Dashboard Stats */
+  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+  .stat-card { background: linear-gradient(135deg, #fff 0%, #f8fafc 100%); border-radius: 12px; padding: 1.5rem; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border-left: 4px solid #2563eb; }
+  .stat-card.students { border-left-color: #2563eb; }
+  .stat-card.attendance { border-left-color: #059669; }
+  .stat-card.activities { border-left-color: #7c3aed; }
+  .stat-card.present { border-left-color: #10b981; }
+  .stat-number { font-size: 2.5rem; font-weight: 700; color: #1e3a8a; margin: 0; }
+  .stat-label { font-size: 0.85rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 0.25rem; }
+  .stat-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+
+  /* Dashboard Header */
+  .dashboard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+  .dashboard-header h2 { margin: 0; color: #1e3a8a; }
+  .user-info { display: flex; align-items: center; gap: 1rem; }
+  .user-badge { background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%); padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem; color: #475569; }
+  .btn-logout { background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%); box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3); }
+  .btn-logout:hover { box-shadow: 0 6px 20px rgba(220, 38, 38, 0.4); }
+
+  /* Tabs */
+  .tabs-container { margin-bottom: 1.5rem; }
+  .tabs-nav { display: flex; gap: 0.5rem; background: #f1f5f9; padding: 0.5rem; border-radius: 12px; margin-bottom: 0; }
+  .tab-btn { flex: 1; padding: 1rem 1.5rem; border: none; background: transparent; border-radius: 8px; cursor: pointer; font-size: 0.95rem; font-weight: 600; color: #64748b; transition: all 0.2s; }
+  .tab-btn:hover { background: rgba(255,255,255,0.5); color: #1e3a8a; }
+  .tab-btn.active { background: #fff; color: #2563eb; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+  .tab-content { background: #fff; border-radius: 0 0 12px 12px; padding: 1.5rem; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
+  .form-actions { margin-top: 1.5rem; display: flex; gap: 1rem; }
+
+  /* Quick Stats Bar */
+  .quick-stats { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem; }
+  .quick-stat { display: flex; align-items: center; gap: 0.5rem; background: #f8fafc; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.85rem; }
+  .quick-stat-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .quick-stat-dot.present { background: #10b981; }
+  .quick-stat-dot.absent { background: #ef4444; }
+  .quick-stat-dot.late { background: #f59e0b; }
+
+  /* Recent Activity Cards */
+  .activity-list { max-height: 300px; overflow-y: auto; }
+  .activity-item { display: flex; align-items: flex-start; gap: 1rem; padding: 1rem; border-bottom: 1px solid #e5e7eb; transition: background 0.2s; }
+  .activity-item:hover { background: #f8fafc; }
+  .activity-item:last-child { border-bottom: none; }
+  .activity-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0; }
+  .activity-icon.assignment { background: #dbeafe; }
+  .activity-icon.quiz { background: #fef3c7; }
+  .activity-icon.participation { background: #d1fae5; }
+  .activity-icon.other { background: #e5e7eb; }
+  .empty-state { text-align: center; padding: 2rem; color: #64748b; }
+  .empty-state .empty-icon { font-size: 3rem; margin-bottom: 1rem; opacity: 0.5; }
+  .empty-state p { margin: 0; }
+
+  /* Student Dashboard Specific Styles */
+  .student-profile-card { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+  .profile-avatar { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; color: white; flex-shrink: 0; }
+  .profile-info h3 { margin: 0 0 0.5rem 0; color: #1e3a8a; font-size: 1.5rem; }
+  .profile-info p { margin: 0.25rem 0; color: #64748b; font-size: 0.9rem; }
+  .profile-info .badge { display: inline-block; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; margin-top: 0.5rem; }
+  
+  .student-stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+  .student-stat-card { background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); border-radius: 12px; padding: 1.25rem; text-align: center; border: 2px solid transparent; transition: all 0.2s; }
+  .student-stat-card:hover { border-color: #2563eb; transform: scale(1.02); }
+  .student-stat-card .stat-icon { font-size: 1.75rem; margin-bottom: 0.5rem; }
+  .student-stat-card .stat-number { font-size: 1.75rem; font-weight: 700; color: #1e3a8a; margin: 0; }
+  .student-stat-card .stat-label { font-size: 0.75rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 0.25rem; }
+  .student-stat-card.excellent { background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); }
+  .student-stat-card.warning { background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); }
+  .student-stat-card.danger { background: linear-gradient(135deg, #fef2f2 0%, #fecaca 100%); }
+
+  .progress-bar-container { background: #e5e7eb; border-radius: 10px; height: 12px; overflow: hidden; margin-top: 0.5rem; }
+  .progress-bar { height: 100%; border-radius: 10px; transition: width 0.5s ease; }
+  .progress-bar.green { background: linear-gradient(90deg, #10b981 0%, #059669 100%); }
+  .progress-bar.yellow { background: linear-gradient(90deg, #f59e0b 0%, #d97706 100%); }
+  .progress-bar.red { background: linear-gradient(90deg, #ef4444 0%, #dc2626 100%); }
+
+  .welcome-message { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
+  .welcome-message h2 { margin: 0 0 0.5rem 0; font-size: 1.5rem; }
+  .welcome-message p { margin: 0; opacity: 0.9; }
+
+  .tip-card { background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-radius: 12px; padding: 1rem 1.25rem; margin-top: 1rem; display: flex; align-items: center; gap: 0.75rem; }
+  .tip-card .tip-icon { font-size: 1.5rem; }
+  .tip-card .tip-text { font-size: 0.9rem; color: #92400e; }
 </style>
 </head>
 <body>
-<header><h1>Student Record Web App</h1></header>
+<header><h1>📚 Student Record System</h1></header>
 <main>
-  <div id="loginView" class="card">
-    <h2>Login</h2>
-    <div class="row">
-      <label><input type="radio" name="role" value="admin" checked /> Admin</label>
-      <label><input type="radio" name="role" value="student" /> Student</label>
+  <!-- Login View -->
+  <div id="loginView" class="login-container">
+    <div class="card">
+      <h2>Welcome Back</h2>
+      <div class="role-selector">
+        <label><input type="radio" name="role" value="admin" checked /> 👤 Admin</label>
+        <label><input type="radio" name="role" value="student" /> 🎓 Student</label>
+      </div>
+      <div id="adminLogin">
+        <label>Username<input id="loginUser" placeholder="Enter username" /></label>
+        <label>Password<input id="loginPass" type="password" placeholder="Enter password" /></label>
+      </div>
+      <div id="studentLogin" class="hidden">
+        <label>Email<input id="stuLoginEmail" placeholder="student@example.com" /></label>
+        <label>Password<input id="stuLoginPass" type="password" placeholder="Enter password" /></label>
+      </div>
+      <div class="login-buttons">
+        <button id="loginBtn">Sign In</button>
+        <button id="showRegisterBtn" class="btn-secondary">Register</button>
+      </div>
+      <div id="loginError" class="error hidden"></div>
     </div>
-    <p>Admin default: <code>admin / password</code></p>
-    <div id="adminLogin">
-      <label>Username<input id="loginUser" placeholder="admin" /></label>
-      <label>Password<input id="loginPass" type="password" placeholder="password" /></label>
-    </div>
-    <div id="studentLogin" class="hidden">
-      <label>Email<input id="stuLoginEmail" placeholder="student@example.com" /></label>
-      <label>Password<input id="stuLoginPass" type="password" placeholder="Your password" /></label>
-    </div>
-    <div class="row" style="margin-top:0.5rem;">
-      <button id="loginBtn">Login</button>
-      <button id="showRegisterBtn" style="background:#475569;">Register</button>
-    </div>
-    <div id="loginError" class="error hidden"></div>
   </div>
 
-  <div id="registerView" class="card hidden">
-    <h2>Student Registration</h2>
-    <div class="row">
-      <label>Name<input id="regName" /></label>
-      <label>Email<input id="regEmail" /></label>
+  <!-- Register View -->
+  <div id="registerView" class="login-container hidden">
+    <div class="card">
+      <h2>Create Account</h2>
+      <div class="form-grid">
+        <label>Full Name<input id="regName" placeholder="John Doe" /></label>
+        <label>Email<input id="regEmail" placeholder="john@example.com" /></label>
+        <label>Year<input id="regYear" placeholder="2026" /></label>
+        <label>Password<input id="regPass" type="password" placeholder="Create a password" /></label>
+      </div>
+      <div class="login-buttons">
+        <button id="registerBtn">Create Account</button>
+        <button id="cancelRegisterBtn" class="btn-secondary">Cancel</button>
+      </div>
+      <div id="registerMsg" class="error hidden"></div>
     </div>
-    <div class="row">
-      <label>Year<input id="regYear" placeholder="2025" /></label>
-      <label>Password<input id="regPass" type="password" /></label>
-    </div>
-    <div class="row" style="margin-top:0.5rem;">
-      <button id="registerBtn">Create Account</button>
-      <button id="cancelRegisterBtn" style="background:#64748b;">Cancel</button>
-    </div>
-    <div id="registerMsg" class="error hidden"></div>
   </div>
 
+  <!-- App View -->
   <div id="appView" class="hidden">
+    <!-- Dashboard Header Card -->
     <div class="card">
-      <h2>Overview</h2>
-      <p><strong>Session:</strong> <span id="sessionUser"></span> <button id="logoutBtn" style="background:#dc2626">Logout</button></p>
-      <p><span class="tag" id="studentsCount">Students: 0</span><span class="tag" id="attendanceCount">Attendance: 0</span><span class="tag" id="activitiesCount">Activities: 0</span></p>
-    </div>
-
-    <div class="row" id="adminPanels">
-      <div class="card" style="flex:1 1 300px;">
-        <h3>Add Student</h3>
-        <label>Name<input id="stuName" /></label>
-        <label>Email<input id="stuEmail" /></label>
-        <label>Year<input id="stuYear" placeholder="2025" /></label>
-        <button id="addStudentBtn">Add Student</button>
-        <div id="addStudentMsg" class="error hidden"></div>
-      </div>
-
-      <div class="card" style="flex:1 1 300px;">
-        <h3>Mark Attendance</h3>
-        <label>Student<select id="attStudent"></select></label>
-        <label>Date<input id="attDate" type="date" /></label>
-        <label>Status<select id="attStatus"><option>present</option><option>absent</option><option>late</option></select></label>
-        <label>Note<textarea id="attNote" rows="2"></textarea></label>
-        <button id="markAttendanceBtn">Mark</button>
-        <div id="attMsg" class="error hidden"></div>
-      </div>
-
-      <div class="card" style="flex:1 1 300px;">
-        <h3>Add Activity</h3>
-        <label>Student<select id="actStudent"></select></label>
-        <label>Type<select id="actType"><option>assignment</option><option>quiz</option><option>participation</option><option>other</option></select></label>
-        <label>Description<textarea id="actDesc" rows="2"></textarea></label>
-        <button id="addActivityBtn">Add Activity</button>
-        <div id="actMsg" class="error hidden"></div>
+      <div class="dashboard-header">
+        <h2>📊 Dashboard</h2>
+        <div class="user-info">
+          <span class="user-badge" id="sessionUser">Admin</span>
+          <button id="logoutBtn" class="btn-logout">Logout</button>
+        </div>
       </div>
     </div>
 
+    <!-- Stats Grid (Admin Only) -->
+    <div class="stats-grid" id="statsGrid">
+      <div class="stat-card students">
+        <div class="stat-icon">👥</div>
+        <p class="stat-number" id="totalStudents">0</p>
+        <p class="stat-label">Total Students</p>
+      </div>
+      <div class="stat-card attendance">
+        <div class="stat-icon">📋</div>
+        <p class="stat-number" id="totalAttendance">0</p>
+        <p class="stat-label">Attendance Records</p>
+      </div>
+      <div class="stat-card activities">
+        <div class="stat-icon">⚡</div>
+        <p class="stat-number" id="totalActivities">0</p>
+        <p class="stat-label">Activities Logged</p>
+      </div>
+      <div class="stat-card present">
+        <div class="stat-icon">✅</div>
+        <p class="stat-number" id="presentToday">0%</p>
+        <p class="stat-label">Present Rate</p>
+      </div>
+    </div>
+
+    <!-- Student Dashboard (Student Only) -->
+    <div id="studentDashboard" class="hidden">
+      <!-- Welcome Message -->
+      <div class="welcome-message">
+        <h2>👋 Welcome back, <span id="studentWelcomeName">Student</span>!</h2>
+        <p>Here's your academic overview. Keep up the great work!</p>
+      </div>
+
+      <!-- Student Profile Card -->
+      <div class="card">
+        <div class="student-profile-card">
+          <div class="profile-avatar" id="studentAvatar">🎓</div>
+          <div class="profile-info">
+            <h3 id="studentProfileName">Student Name</h3>
+            <p>📧 <span id="studentProfileEmail">student@example.com</span></p>
+            <p>📅 Enrolled: <span id="studentProfileEnrolled">-</span></p>
+            <p>🎓 Year: <span id="studentProfileYear">-</span></p>
+            <span class="badge" id="studentProfileStatus">Active</span>
+          </div>
+        </div>
+
+        <!-- Student Stats -->
+        <div class="student-stats-grid">
+          <div class="student-stat-card" id="studentPresentCard">
+            <div class="stat-icon">✅</div>
+            <p class="stat-number" id="studentPresentCount">0</p>
+            <p class="stat-label">Days Present</p>
+          </div>
+          <div class="student-stat-card" id="studentAbsentCard">
+            <div class="stat-icon">❌</div>
+            <p class="stat-number" id="studentAbsentCount">0</p>
+            <p class="stat-label">Days Absent</p>
+          </div>
+          <div class="student-stat-card" id="studentLateCard">
+            <div class="stat-icon">⏰</div>
+            <p class="stat-number" id="studentLateCount">0</p>
+            <p class="stat-label">Days Late</p>
+          </div>
+          <div class="student-stat-card" id="studentActivitiesCard">
+            <div class="stat-icon">📝</div>
+            <p class="stat-number" id="studentActivitiesCount">0</p>
+            <p class="stat-label">Activities</p>
+          </div>
+        </div>
+
+        <!-- Attendance Progress -->
+        <div style="margin-top: 1.5rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-weight: 600; color: #374151;">📊 Attendance Rate</span>
+            <span style="font-weight: 700; color: #1e3a8a;" id="studentAttendanceRate">0%</span>
+          </div>
+          <div class="progress-bar-container">
+            <div class="progress-bar green" id="studentAttendanceBar" style="width: 0%;"></div>
+          </div>
+        </div>
+
+        <!-- Tip Card -->
+        <div class="tip-card">
+          <span class="tip-icon">💡</span>
+          <span class="tip-text" id="studentTip">Great attendance leads to better academic performance!</span>
+        </div>
+      </div>
+
+      <!-- Activity Summary Card -->
+      <div class="card">
+        <h3 style="margin-top:0; color:#1e3a8a;">📊 Activity Summary</h3>
+        <div class="student-stats-grid" style="margin-top: 1rem;">
+          <div class="student-stat-card">
+            <div class="stat-icon">📄</div>
+            <p class="stat-number" id="studentAssignmentCount">0</p>
+            <p class="stat-label">Assignments</p>
+          </div>
+          <div class="student-stat-card">
+            <div class="stat-icon">📝</div>
+            <p class="stat-number" id="studentQuizCount">0</p>
+            <p class="stat-label">Quizzes</p>
+          </div>
+          <div class="student-stat-card">
+            <div class="stat-icon">🙋</div>
+            <p class="stat-number" id="studentParticipationCount">0</p>
+            <p class="stat-label">Participation</p>
+          </div>
+          <div class="student-stat-card">
+            <div class="stat-icon">📌</div>
+            <p class="stat-number" id="studentOtherCount">0</p>
+            <p class="stat-label">Other</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Admin Panels with Tabs -->
+    <div id="adminPanels" class="card tabs-container">
+      <div class="tabs-nav">
+        <button class="tab-btn active" data-tab="addStudent">➕ Add Student</button>
+        <button class="tab-btn" data-tab="markAttendance">📝 Mark Attendance</button>
+        <button class="tab-btn" data-tab="addActivity">🎯 Add Activity</button>
+      </div>
+      <div class="tab-content">
+        <!-- Add Student Tab -->
+        <div id="addStudent" class="tab-panel active">
+          <h3 style="margin-top:0; color:#1e3a8a;">Register New Student</h3>
+          <div class="form-grid">
+            <label>Full Name<input id="stuName" placeholder="Enter student name" /></label>
+            <label>Email Address<input id="stuEmail" placeholder="student@example.com" /></label>
+            <label>Enrollment Year<input id="stuYear" placeholder="2026" /></label>
+          </div>
+          <div class="form-actions">
+            <button id="addStudentBtn">➕ Add Student</button>
+          </div>
+          <div id="addStudentMsg" class="error hidden"></div>
+        </div>
+
+        <!-- Mark Attendance Tab -->
+        <div id="markAttendance" class="tab-panel">
+          <h3 style="margin-top:0; color:#1e3a8a;">Record Attendance</h3>
+          <div class="form-grid">
+            <label>Select Student<select id="attStudent"></select></label>
+            <label>Date<input id="attDate" type="date" /></label>
+            <label>Status
+              <select id="attStatus">
+                <option value="present">✅ Present</option>
+                <option value="absent">❌ Absent</option>
+                <option value="late">⏰ Late</option>
+              </select>
+            </label>
+            <label>Note (Optional)<textarea id="attNote" rows="2" placeholder="Add any notes..."></textarea></label>
+          </div>
+          <div class="form-actions">
+            <button id="markAttendanceBtn">📝 Mark Attendance</button>
+          </div>
+          <div id="attMsg" class="error hidden"></div>
+        </div>
+
+        <!-- Add Activity Tab -->
+        <div id="addActivity" class="tab-panel">
+          <h3 style="margin-top:0; color:#1e3a8a;">Log Activity for All Students</h3>
+          <div class="form-grid">
+            <label>Activity Type
+              <select id="actType">
+                <option value="assignment">📄 Assignment</option>
+                <option value="quiz">📝 Quiz</option>
+                <option value="participation">🙋 Participation</option>
+                <option value="other">📌 Other</option>
+              </select>
+            </label>
+          </div>
+          <label style="margin-top:1rem;">Description<textarea id="actDesc" rows="3" placeholder="Describe the activity (e.g., 'Chapter 5 Quiz', 'Homework Assignment #3')..."></textarea></label>
+          <p style="margin-top:0.5rem; font-size:0.85rem; color:#64748b;">📢 This activity will be logged for all active students.</p>
+          <div class="form-actions">
+            <button id="addActivityBtn">🎯 Add Activity for All Students</button>
+          </div>
+          <div id="actMsg" class="hidden"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Students List -->
     <div class="card" id="studentsCard">
-      <h3>Students</h3>
-      <table id="studentsTable"><thead><tr><th>Name</th><th>Email</th><th>Year</th><th>Status</th><th>Enrolled</th></tr></thead><tbody></tbody></table>
+      <h3 style="margin-top:0; color:#1e3a8a;">👥 Student Directory</h3>
+      <table id="studentsTable">
+        <thead>
+          <tr><th>Name</th><th>Email</th><th>Year</th><th>Status</th><th>Enrolled On</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
     </div>
 
-    <div class="card">
-      <h3>Recent Attendance</h3>
-      <table id="attendanceTable"><thead><tr><th>Date</th><th>Student</th><th>Status</th><th>Note</th></tr></thead><tbody></tbody></table>
+    <!-- Recent Attendance -->
+    <div class="card" id="attendanceCard">
+      <h3 style="margin-top:0; color:#1e3a8a;" id="attendanceCardTitle">📋 Recent Attendance</h3>
+      <div class="quick-stats" id="attendanceStats">
+        <div class="quick-stat"><span class="quick-stat-dot present"></span> <span id="presentCount">0</span> Present</div>
+        <div class="quick-stat"><span class="quick-stat-dot absent"></span> <span id="absentCount">0</span> Absent</div>
+        <div class="quick-stat"><span class="quick-stat-dot late"></span> <span id="lateCount">0</span> Late</div>
+      </div>
+      <table id="attendanceTable">
+        <thead>
+          <tr><th>Date</th><th>Student</th><th>Status</th><th>Note</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
     </div>
 
-    <div class="card">
-      <h3>Recent Activities</h3>
-      <table id="activitiesTable"><thead><tr><th>Time</th><th>Student</th><th>Type</th><th>Description</th></tr></thead><tbody></tbody></table>
+    <!-- Recent Activities -->
+    <div class="card" id="activitiesCard">
+      <h3 style="margin-top:0; color:#1e3a8a;" id="activitiesCardTitle">⚡ Recent Activities</h3>
+      <table id="activitiesTable">
+        <thead>
+          <tr><th>Time</th><th>Student</th><th>Type</th><th>Description</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
     </div>
-
   </div>
 </main>
-<footer>Student Record System &copy; 2025</footer>
+<footer>Student Record System &copy; 2026 | Made with ❤️</footer>
 <script src="app.js"></script>
 </body>
 </html>
